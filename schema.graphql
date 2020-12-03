@@ -1,14 +1,6 @@
 type Donate @entity {
   id: ID!
-  amount: BigInt!
   donate: DonationSent!
-}
-
-type DonationSent @entity {
-  id: ID!
-  token: Bytes! # address
-  amount: BigInt! # amount
-  dest: Bytes! # address
 }
 
 type TokenWithdrawn @entity {
@@ -18,9 +10,27 @@ type TokenWithdrawn @entity {
   dest: Bytes! # address
 }
 
-type DepositMade @entity {
+type DonationSent @entity {
   id: ID!
   token: Bytes! # address
   amount: BigInt! # amount
   dest: Bytes! # address
+  donor: Bytes! # address
+}
+
+type DepositMade @entity {
+  id: ID!
+  token: Bytes! # address
+  amount: BigInt! # amount
+  user: Bytes! # address
+}
+
+type Paused @entity {
+  id: ID!
+  account: Bytes! # address
+}
+
+type Unpaused @entity {
+  id: ID!
+  account: Bytes! # address
 }

@@ -15,6 +15,8 @@ dataSources:
       entities:
         - DonationSent
         - TokenWithdrawn
+        - Paused
+        - Unpaused
       abis:
         - name: BulkCheckout
           file: ./abis/BulkCheckout.json
@@ -23,13 +25,18 @@ dataSources:
           handler: handleDonationSent
         - event: TokenWithdrawn(indexed address,indexed uint256,indexed address)
           handler: handleTokenWithdrawn
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+        
       file: ./src/mapping.ts
   - kind: ethereum/contract
-    name: ZkSyncDeposit
+    name: BatchZkSyncDeposit
     network: mainnet
     source:
       address: "0x9D37F793E5eD4EbD66d62D505684CD9f756504F6"
-      abi: ZkSyncDeposit
+      abi: BatchZkSyncDeposit
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -37,8 +44,8 @@ dataSources:
       entities:
         - DepositMade
       abis:
-        - name: ZkSyncDeposit
-          file: ./abis/ZkSyncDeposit.json
+        - name: BatchZkSyncDeposit
+          file: ./abis/BatchZkSyncDeposit.json
       eventHandlers:
         - event: DepositMade(indexed address,indexed uint104,indexed address)
           handler: handleDepositMade
