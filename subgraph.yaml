@@ -1,0 +1,45 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: BulkCheckout
+    network: mainnet
+    source:
+      address: "0x7d655c57f71464B6f83811C55D84009Cd9f5221C"
+      abi: BulkCheckout
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - DonationSent
+        - TokenWithdrawn
+      abis:
+        - name: BulkCheckout
+          file: ./abis/BulkCheckout.json
+      eventHandlers:
+        - event: DonationSent(indexed address,indexed uint256,address,indexed address)
+          handler: handleDonationSent
+        - event: TokenWithdrawn(indexed address,indexed uint256,indexed address)
+          handler: handleTokenWithdrawn
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: ZkSyncDeposit
+    network: mainnet
+    source:
+      address: "0x9D37F793E5eD4EbD66d62D505684CD9f756504F6"
+      abi: ZkSyncDeposit
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - DepositMade
+      abis:
+        - name: ZkSyncDeposit
+          file: ./abis/ZkSyncDeposit.json
+      eventHandlers:
+        - event: DepositMade(indexed address,indexed uint104,indexed address)
+          handler: handleDepositMade
+      file: ./src/mapping.ts

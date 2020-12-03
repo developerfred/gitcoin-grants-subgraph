@@ -1,0 +1,26 @@
+type Donate @entity {
+  id: ID!
+  amount: BigInt!
+  donate: DonationSent!
+}
+
+type DonationSent @entity {
+  id: ID!
+  token: Bytes! # address
+  amount: BigInt! # amount
+  dest: Bytes! # address
+}
+
+type TokenWithdrawn @entity {
+  id: ID!
+  token: Bytes! # address
+  amount: BigInt! # amount
+  dest: Bytes! # address
+}
+
+type DepositMade @entity {
+  id: ID!
+  token: Bytes! # address
+  amount: BigInt! # amount
+  dest: Bytes! # address
+}
