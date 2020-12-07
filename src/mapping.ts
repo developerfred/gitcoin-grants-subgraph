@@ -1,12 +1,22 @@
 import { DonationSent as DonationSentEvent,  TokenWithdrawn as TokenWithdrawnEvent, Paused as PausedEvent, Unpaused as UnpausedEvent } from "../generated/BulkCheckout/BulkCheckout"
 import { DepositMade as DepositMadeEvent} from "../generated/BatchZkSyncDeposit/BatchZkSyncDeposit";
 import {
+  PayoutClaimed as PayoutClaimedEvent,
+  PayoutAdded as PayoutAddedEvent,
+  PayoutFlagSet as PayoutFlagSetEvent,
+  OwnershipTransferred as OwnershipTransferredEvent,
+} from "../generated/MatchPayouts/MatchPayouts";
+import {
   DonationSent,
   TokenWithdrawn,
   Paused,
   Unpaused,
-  DepositMade
-} from "../generated/schema" 
+  DepositMade,
+  PayoutClaimed,
+  PayoutAdded,
+  PayoutFlagSet,
+  OwnershipTransferred
+} from "../generated/schema"; 
 
 export function handleDonationSent(event: DonationSentEvent): void {
   let entity = new DonationSent(
@@ -59,3 +69,51 @@ export function handleDepositMade(event: DepositMadeEvent): void {
   entity.user = event.params.user
   entity.save()
 }
+
+export function handleOwnershipTransferred(
+         event: OwnershipTransferredEvent
+       ): void {
+         let ownership = new OwnershipTransferred(
+           event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+         );
+
+        ownership.previousOwner = event.params.previousOwner;
+        ownership.newOwner = event.params.newOwner;
+        ownership.save();
+       }
+
+
+export function handlePayoutClaimed(
+         event: PayoutClaimedEvent
+       ): void {
+         let payout = new PayoutClaimed(
+           event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+         );
+
+        payout.recipient = event.params.recipient;
+        payout.save();
+       }
+
+
+export function handlePayoutAdded(
+         event: PayoutAddedEvent
+       ): void {
+         let payout = new PayoutAdded(
+           event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+         );
+
+        payout.recipient = event.params.recipient;
+        payout.amount = event.params.amount;
+        payout.save();
+       }
+
+export function handlePayoutFlagSet(
+         event: PayoutFlagSetEvent
+       ): void {
+         let payout = new PayoutFlagSet(
+           event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+         );
+
+        payout.readyForPayout = event.params.readyForPayout;
+        payout.save();
+       }

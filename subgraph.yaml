@@ -50,3 +50,31 @@ dataSources:
         - event: DepositMade(indexed address,indexed uint104,indexed address)
           handler: handleDepositMade
       file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: MatchPayouts
+    network: mainnet
+    source:
+      address: "0x00000000000000000000000000000" # Todo add contract Deploy
+      abi: MatchPayouts
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+          - OwnershipTransferred
+          - PayoutAdded
+          - PayoutClaimed
+          - PayoutFlagSet
+      abis:
+        - name: MatchPayouts
+          file: ./abis/MatchPayouts.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PayoutAdded(address,uint256)
+          handler: handlePayoutAdded
+        - event: PayoutClaimed(address)
+          handler: handlePayoutClaimed
+        - event: PayoutFlagSet(bool)
+          handler: handlePayoutFlagSet
+      file: ./src/mapping.ts
