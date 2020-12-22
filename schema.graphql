@@ -34,3 +34,25 @@ type Unpaused @entity {
   id: ID!
   account: Bytes! # address
 }
+
+type OwnershipTransferred @entity {
+  id: ID!
+  previousOwner: Bytes!
+  newOwner: Bytes!
+}
+
+type PayoutClaimed @entity {
+  id: ID!
+  recipient: Bytes!
+}
+
+type PayoutAdded @entity {
+  id: ID!
+  recipient: Bytes!
+  amount: BigInt!
+
+}
+type PayoutFlagSet @entity {
+  id: ID!
+  readyForPayout: bool!
+}
