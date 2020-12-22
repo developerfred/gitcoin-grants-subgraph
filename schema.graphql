@@ -54,5 +54,5 @@ type PayoutAdded @entity {
 }
 type PayoutFlagSet @entity {
   id: ID!
-  readyForPayout: bool!
+  readyForPayout: Boolean!
 }
