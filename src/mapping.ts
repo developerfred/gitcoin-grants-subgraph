@@ -91,6 +91,7 @@ export function handlePayoutClaimed(
          );
 
         payout.recipient = event.params.recipient;
+        payout.amount = event.params.amount;
         payout.save();
        }
 

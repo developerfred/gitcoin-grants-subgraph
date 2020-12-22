@@ -73,7 +73,7 @@ dataSources:
           handler: handleOwnershipTransferred
         - event: PayoutAdded(address,uint256)
           handler: handlePayoutAdded
-        - event: PayoutClaimed(address)
+        - event: PayoutClaimed(address,uint256)
           handler: handlePayoutClaimed
         - event: PayoutFlagSet(bool)
           handler: handlePayoutFlagSet
