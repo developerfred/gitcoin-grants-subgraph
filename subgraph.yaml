@@ -69,12 +69,8 @@ dataSources:
         - name: MatchPayouts
           file: ./abis/MatchPayouts.json
       eventHandlers:
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
         - event: PayoutAdded(address,uint256)
           handler: handlePayoutAdded
         - event: PayoutClaimed(address,uint256)
           handler: handlePayoutClaimed
-        - event: PayoutFlagSet(bool)
-          handler: handlePayoutFlagSet
       file: ./src/mapping.ts

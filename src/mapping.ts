@@ -3,8 +3,6 @@ import { DepositMade as DepositMadeEvent} from "../generated/BatchZkSyncDeposit/
 import {
   PayoutClaimed as PayoutClaimedEvent,
   PayoutAdded as PayoutAddedEvent,
-  PayoutFlagSet as PayoutFlagSetEvent,
-  OwnershipTransferred as OwnershipTransferredEvent,
 } from "../generated/MatchPayouts/MatchPayouts";
 import {
   DonationSent,
@@ -14,8 +12,6 @@ import {
   DepositMade,
   PayoutClaimed,
   PayoutAdded,
-  PayoutFlagSet,
-  OwnershipTransferred
 } from "../generated/schema"; 
 
 export function handleDonationSent(event: DonationSentEvent): void {
@@ -70,19 +66,6 @@ export function handleDepositMade(event: DepositMadeEvent): void {
   entity.save()
 }
 
-export function handleOwnershipTransferred(
-         event: OwnershipTransferredEvent
-       ): void {
-         let ownership = new OwnershipTransferred(
-           event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-         );
-
-        ownership.previousOwner = event.params.previousOwner;
-        ownership.newOwner = event.params.newOwner;
-        ownership.save();
-       }
-
-
 export function handlePayoutClaimed(
          event: PayoutClaimedEvent
        ): void {
@@ -105,16 +88,5 @@ export function handlePayoutAdded(
 
         payout.recipient = event.params.recipient;
         payout.amount = event.params.amount;
-        payout.save();
-       }
-
-export function handlePayoutFlagSet(
-         event: PayoutFlagSetEvent
-       ): void {
-         let payout = new PayoutFlagSet(
-           event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-         );
-
-        payout.readyForPayout = event.params.readyForPayout;
         payout.save();
        }
